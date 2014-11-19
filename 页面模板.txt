@@ -1,0 +1,235 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta name="generator" content="apollo-technology">
+<meta name="description" content="页面功能描述">
+
+<title>新闻处理</title>
+
+<script language="JavaScript" src="_include/awfcomm.js"></script>
+<script language="JavaScript">DrawIncluding()</script>
+</head>
+<body topmargin="0" leftmargin="0">
+<div id="PageContent" style="visibility:hidden">
+
+<!--顶部菜单-->
+<TABLE ALIGN=CENTER WIDTH=780 BORDER=0 CELLPADDING=0 CELLSPACING=0 class="Top">
+	<TR><script language="JavaScript">DrawLogo()</script></TR>
+	<TR><script language="JavaScript">DrawToolbar()</script></TR>
+	<TR><script language="JavaScript">DrawTitlebar()</script>
+		<TD><IMG SRC="images/spacer.gif" WIDTH=1 HEIGHT=2 ALT=""></TD>
+	</TR>
+</TABLE>
+
+
+<!--主体表格-->
+<TABLE ALIGN=CENTER class="MainBody">
+	<TR>
+		<TD class="SDMenu">
+			<TABLE class="SDMenu">
+				<tr><td width=100% align=center valign=top>
+			    <div style="float: left" id="my_menu" class="sdmenu"></div>
+				</td></tr>
+			</TABLE>
+		<TD>
+		<TD class="Main">
+              <table class="Main" ALIGN=CENTER>
+			 <!-- DrawMainTitle -->
+			  <tr><td colspan=5><div id="MainTitle"></div></td></tr>
+			  <tr>
+			  <td background="images/b2.jpg" width=4 height=100%></td>
+			  <td width=10 height=100%>&nbsp;</td>
+			  <td class="MainWorkSpace">
+
+		<!-- 信息 -->
+		<div id="channelInfo1"></div> 
+		<div id="line"></div>
+		<div id="keyWord"></div>
+		<div id="paraInfo"></div> 
+		<div id="ContainTable"></div>
+		<!-- 保存 -->
+		<div id="SaveButton"></div>
+
+	 </td>
+     <td width=3 height=100%></td>
+     <td background="images/b4.gif" width=3 height=100%></td>
+     </tr>
+     <tr> 
+     <td colspan=5> <img src="images/b5.jpg" width=720 height=6 alt=""></td>
+     </tr>
+     </table>
+  </TD>
+ </TR>
+</TABLE>
+
+<!--底部菜单-->
+<TABLE ALIGN=CENTER class="Bottom">
+ <TR><script language="JavaScript">DrawBottomLink()</script></TR>
+</TABLE>
+<!--版权信息-->
+<TABLE ALIGN=CENTER class="Info">
+ <TR><script language="JavaScript">DrawCopyrightInfo()</script></TR>
+</TABLE>
+</div>
+</body>
+
+<script language=javascript>
+var limitation = 0;
+function DEBUG(info) {}
+
+
+
+function OnNotifyItem(name, argv) {
+	var value = GetValueByID(name);
+	switch (name) {
+		
+	}
+}
+
+function CreateAllItems() {
+	var proxy = new AWF.HtmlProxy();
+	var member, id;
+
+	proxy.setRootID("MainTitle");
+	proxy.createTitleLabel({title: '新闻处理'});
+
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 5,colWidth: ["3%","10%","30%","10%","20%"]}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type: 'br'};
+	member[id++] = {type: 'leftlabel', title: '', id: ''};
+	member[id++] = {type: 'br'};
+	member[id++] = {type: 'leftlabel', title: '', id: ''};
+	member[id++] = {type: 'leftlabel', title: '频道', id: ''};
+	member[id++] = {type: 'droplist', id: 'opt.newsChannel', optionMap: {0:'要闻',1: '', 2: '',3:''},defaultValue: '0'};
+	member[id++] = {type: 'leftlabel', title: '', id: ''};
+	member[id++] = {type:'button',id:'btn.getNews',title:'获取新闻',image: {url: 'images/btnS-112.gif', width: 112},cmd: searchNews};
+	member[id++] = {type: 'br'};
+	proxy.setRootID("channelInfo1");
+	proxy.createItems(member);
+
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 1}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'leftlabel',title:'------------------------------------------------------------------------------------------------'};
+	proxy.setRootID("line");
+	proxy.createItems(member);
+
+
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 5,colWidth: ["2.5%","10%","30%","10%","20%"]}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type: 'br'};
+	member[id++] = {type: 'leftlabel', title: '', id: ''};
+	member[id++] = {type: 'paralabel', title: '新闻列表'};
+	proxy.setRootID("paraInfo");
+	proxy.createItems(member);
+		
+	proxy.setLayout(new AWF.SimpleLayout({align: "left"}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'hidden',id:'int.keyWordID',title:''};
+	//member[id++] = {type:'hidden',id:'int.',title:''};
+	member[id++] = {type:'label',id:'txt.newsTitle',title:'新闻标题',width:300,align: "center"};
+	member[id++] = {type:'label',id:'txt.keyWord',title:'关键字',width:250,align: "center"};
+	member[id++] = {type:'button',id:'btn.commit',title:'提交',width:30,align: "center",cmd: commit};
+	proxy.setRootID("ContainTable");
+	var ctprop = { addDelCol: false, addFirstRow: true };
+	Contain = proxy.createContainTable(member, ctprop );
+
+}
+
+function commit()//提交
+{
+	
+}
+
+function searchNews()
+{
+	var submitProps = {
+		formURL: __SELECTDETAIL_URL__,
+		formTarget: "",
+		formData: {},
+		onSubmitSucc: getAllData_Result
+	}
+
+	var commonParameters = {};
+	commonParameters['mySite'] = 'site';
+	commonParameters['myPage'] = myPage;
+	submitProps.formData['parameters.common'] = commonParameters;
+	
+	var data = {
+		"userID.telephone" : userID,
+		"newsChannelID.telephone" : GetValueByID()
+	};
+	submitProps.formData['table.searchNews.telephone'] = data;//查找新闻
+
+	var form = new AWFForm(submitProps);
+	form.doSubmit();
+	
+}
+
+function removeAllChild(divname) {
+	var div = document.getElementById(divname);
+	while(div && div.hasChildNodes()) 
+	{
+		div.removeChild(div.firstChild);
+	}
+}
+
+function InitPage() {
+
+	loadInitPageData();
+}
+
+var userID;
+function LoadInitPageData_Callback() {
+	Whoami = InitPageData['whoami'];
+	systemType = Whoami['systemType.whoami'];
+	userName = Whoami['userName.account'];
+	userID = parseInt(Whoami["userID.whoami"]);
+	getAllData();
+}
+
+function getAllData() 
+{
+	var submitProps = {
+		formURL: __SELECTDETAIL_URL__,
+		formTarget: "",
+		formData: {},
+		onSubmitSucc: getAllData_Result
+	}
+
+	var commonParameters = {};
+	commonParameters['mySite'] = 'site';
+	commonParameters['myPage'] = myPage;
+	submitProps.formData['parameters.common'] = commonParameters;
+
+	var data = {
+		"" : "",
+		"" : ""
+	};
+	submitProps.formData['list.newsChannelInfo.telephone'] = data;//获取频道下拉
+
+	var form = new AWFForm(submitProps);
+	form.doSubmit();
+
+}
+function OnPaint() {
+	AWFUtil.setClientWidth(WORKSPACEWIDTH);
+	AWFUtil.setLineHeight(26);
+	CreateAllItems();
+	ShowPageContent();
+}
+</script>
+
+<script language="javascript">
+myPage = "NewsHandle.htm";
+myPageID = "";
+DEBUG("Begin "+myPage);
+OnPaint();
+//InitPage();
+DEBUG("End "+myPage);
+</script>

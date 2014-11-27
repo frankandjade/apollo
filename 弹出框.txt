@@ -1,0 +1,68 @@
+function add()//新增关键字
+{
+	var props = {
+		height:400,
+		width:700,
+		onPaint: ConfigWin,	//绘制弹出框
+		onSubmit: ConfigSubmit	//提交触发的函数
+	};		
+	AWF.Popwin.form("新增关键字", props);
+}
+
+function ConfigWin(topDom)
+{	
+	var proxy = new AWF.HtmlProxy();
+	var member, id;
+
+	proxy.setLayout(new AWF.SimpleLayout({ align:"left" }));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'div',title:'div1',id:'div1'};
+	member[id++] = {type:'br'};
+	member[id++] = {type:'div',title:'div2',id:'div2'};
+	member[id++] = {type:'br'};
+	member[id++] = {type:'div',title:'div3',id:'div3'};
+	member[id++] = {type:'br'};
+	member[id++] = {type:'div',id:'div4'};
+	member[id++] = {type:'br'};
+	proxy.setRootID(topDom);
+	proxy.createItems(member);
+
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 4,colWidth:["14%","30%","15%","25%"]}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'leftlabel',title:'&nbsp;&nbsp;&nbsp;&nbsp;频道名称'};
+	member[id++] = {type:'leftlabel',title:GetValueByID('txt.searchChannelName')};
+	proxy.setRootID("div1");
+	proxy.createItems(member);
+
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 1}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'leftlabel',title:'---------------------------------------------------------------------------------------------'};
+	proxy.setRootID("div2");
+	proxy.createItems(member);
+
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 4,colWidth:["14%","30%","15%","25%"]}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'leftlabel',title:''};
+	member[id++] = {type:'br'};
+	member[id++] = {type:'leftlabel',title:'&nbsp;&nbsp;&nbsp;&nbsp;关键字'};
+	member[id++] = {type:'text',id:'txt.keywordNameConfig'};
+	proxy.setRootID("div3");
+	proxy.createItems(member);
+	
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 3,colWidth: ["2.5%","10%","80%"]}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type: 'br'};
+	member[id++] = {type: 'leftlabel', title: '', id: ''};
+	member[id++] = {type: 'br'};
+	member[id++] = {type: 'leftlabel', title: '', id: ''};
+	member[id++] = {type: 'leftlabel', title: '说明'};
+	member[id++] = {type:'textarea',id:'txt.commentConfig',maxLength: 500};
+	proxy.setRootID("div4");
+	proxy.createItems(member);
+
+}

@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta name="generator" content="apollo-technology">
+<meta name="description" content="页面功能描述">
+
+<title>手机APP用户</title>
+
+<script language="JavaScript" src="_include/awfcomm.js"></script>
+<script language="JavaScript">DrawIncluding()</script>
+</head>
+<body topmargin="0" leftmargin="0">
+<div id="PageContent" style="visibility:hidden">
+
+<!--顶部菜单-->
+<TABLE ALIGN=CENTER WIDTH=780 BORDER=0 CELLPADDING=0 CELLSPACING=0 class="Top">
+	<TR><script language="JavaScript">DrawLogo()</script></TR>
+	<TR><script language="JavaScript">DrawToolbar()</script></TR>
+	<TR><script language="JavaScript">DrawTitlebar()</script>
+		<TD><IMG SRC="images/spacer.gif" WIDTH=1 HEIGHT=2 ALT=""></TD>
+	</TR>
+</TABLE>
+
+
+<!--主体表格-->
+<TABLE ALIGN=CENTER class="MainBody">
+	<TR>
+		<TD class="SDMenu">
+			<TABLE class="SDMenu">
+				<tr><td width=100% align=center valign=top>
+			    <div style="float: left" id="my_menu" class="sdmenu"></div>
+				</td></tr>
+			</TABLE>
+		<TD>
+		<TD class="Main">
+              <table class="Main" ALIGN=CENTER>
+			 <!-- DrawMainTitle -->
+			  <tr><td colspan=5><div id="MainTitle"></div></td></tr>
+			  <tr>
+			  <td background="images/b2.jpg" width=4 height=100%></td>
+			  <td width=10 height=100%>&nbsp;</td>
+			  <td class="MainWorkSpace">
+
+		<!-- 信息 -->
+		<div id="SearchInfoInner"></div> 
+		<div id="Page"></div> 
+		<div id="line"></div> 
+		<div id="paraInfo"></div> 
+		<div id="Button"></div> 
+		<div id="ContainTable"></div> 
+		<!-- 保存 -->
+		<div id="SaveButton"></div>
+
+	 </td>
+     <td width=3 height=100%></td>
+     <td background="images/b4.gif" width=3 height=100%></td>
+     </tr>
+     <tr> 
+     <td colspan=5> <img src="images/b5.jpg" width=720 height=6 alt=""></td>
+     </tr>
+     </table>
+  </TD>
+ </TR>
+</TABLE>
+
+<!--底部菜单-->
+<TABLE ALIGN=CENTER class="Bottom">
+ <TR><script language="JavaScript">DrawBottomLink()</script></TR>
+</TABLE>
+<!--版权信息-->
+<TABLE ALIGN=CENTER class="Info">
+ <TR><script language="JavaScript">DrawCopyrightInfo()</script></TR>
+</TABLE>
+</div>
+</body>
+
+<script language=javascript>
+var limitation = 0;
+function DEBUG(info) {}
+
+function OnNotifyItem(name, argv) {
+	var value = GetValueByID(name);
+	switch (name) {
+		
+	}
+}
+
+function CreateAllItems() {
+	var proxy = new AWF.HtmlProxy();
+	var member, id;
+
+	proxy.setRootID("MainTitle");
+	proxy.createTitleLabel({title: '频道管理'});
+
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 4,colWidth:["10%","30%","10%","40%"]}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'leftlabel',title:''};
+	member[id++] = {type:'br'};
+	member[id++] = {type:'leftlabel',title:'&nbsp;&nbsp;&nbsp;&nbsp;频道'};
+	member[id++] = {type:'text',id:'txt.searchChannelName',maxLength: 22};
+	member[id++] = {type:'br'};
+	member[id++] = {type:'leftlabel',title:'&nbsp;&nbsp;&nbsp;&nbsp;状态'};
+	member[id++] = {type:'radiobutton',id:'opt.activeStatus',optionMap:{1:'激活',2:'不激活',0:'全部'},defaultValue:'0'};
+	//member[id++] = {type:'button',id:'gb_search',title:'查询',cmd: searchData};
+	proxy.setRootID("SearchInfoInner");
+	proxy.createItems(member);
+
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 1}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'leftlabel',title:'-------------------------------------------------------------------------------------------------'};
+	proxy.setRootID("line");
+	proxy.createItems(member);
+
+	 proxy.setLayout(new AWF.GridLayout({ colNumber: 8, colWidth: ["54%","4%","2%","8%","4%","11%","11%","11%"]}));
+	 member = new Array();
+	 id = 0;
+	 member[id++] = {type: 'leftlabel', title: '&nbsp;'};
+	 member[id++] = {type: 'leftlabel', title: '全&nbsp;'};
+	 member[id++] = {type: 'leftlabel', title: '0', id: 'lbl.totalPages'};
+	 member[id++] = {type: 'leftlabel', title: '&nbsp;页之'};
+	 member[id++] = {type: 'text',id: 'txt.currentPage', defaultValue:'1'};
+	 
+	 member[id++] = {type: 'button', id: 'gb_last', title: '上一页', cmd: LoadPage , argv : -1};
+	 member[id++] = {type: 'button', id: 'gb_search', title: '查询', cmd: searchData};
+	 member[id++] = {type: 'button', id: 'gb_next', title: '下一页', cmd: LoadPage , argv : 1};
+	 member[id++] = { type:'br'};
+	 member[id++] = { type:'hidden',id:'int.currentPage'};
+	 proxy.setRootID("Page");
+	 proxy.createItems(member);
+
+	proxy.setLayout(new AWF.GridLayout({ colNumber: 5,colWidth: ["2.5%","40%","30%","10%","20%"]}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type: 'br'};
+	member[id++] = {type: 'leftlabel', title: '', id: ''};
+	member[id++] = {type: 'paralabel', title: '频道列表'};
+	proxy.setRootID("paraInfo");
+	proxy.createItems(member);
+	
+	proxy.setLayout(new AWF.SimpleLayout({align: "right"}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'button',id:'gb_add',title:'新增',image: {url: 'images/btnS-112.gif', width: 112},cmd: add};
+	proxy.setRootID("ContainTable");
+	proxy.createItems(member);
+		
+	proxy.setLayout(new AWF.SimpleLayout({align: "left"}));
+	member = new Array();
+	id = 0;
+	proxy.setRootID("ContainTable");
+	proxy.createItems(member);
+
+	member = new Array();
+	id = 0;	
+	member[id++] = {type:'hidden',id:'int.newsChannelID',title:''};
+	member[id++] = {type:'hidden',id:'int.status',title:''};
+	member[id++] = {type:'label',id:'txt.channelName',title:'频道',width:250,align: "center"};
+	member[id++] = {type:'label',id:'txt.comment',title:'备注',width:250,align: "center"};
+	member[id++] = {type:'label',id:'txt.status',title:'状态',width:200,align: "center"};
+	member[id++] = {type:'button',id:'gb_detail',title:'详情',width:60,cmd: detail};
+	proxy.setRootID("ContainTable");
+	var ctprop = { addDelCol: false, addFirstRow: false };
+	Contain = proxy.createContainTable(member, ctprop );	
+
+	proxy.setLayout(new AWF.SimpleLayout({align: "left"}));
+	member = new Array();
+	id = 0;
+	member[id++] = {type:'br'};
+	member[id++] = {type:'leftlabel',title:''};
+	member[id++] = {type:'br'};
+	proxy.setRootID("ContainTable");
+	proxy.createItems(member);
+}
+
+function LoadPage(nDir) {
+	var lPage;
+
+	lPage = parseInt(GetValueByID("txt.currentPage")) + nDir;
+	if (lPage < 1) 
+		return;
+	if (lPage > parseInt(GetValueByID("lbl.totalPages"))) 
+		return;
+	if (lPage != parseInt(GetValueByID("txt.currentPage"))) {
+		SetValueByID('txt.currentPage', lPage);
+		searchData();
+	}
+}
+
+
+function detail(argv)//明细
+{
+	var rowID = argv[0].bindID;
+	var props ={
+		"ChannelID" : GetValueByID('int.newsChannelID_'+ rowID),
+		"Status" : GetValueByID('int.status_'+ rowID),
+		"Comment" : GetValueByID('txt.comment_'+ rowID)
+	};
+	AWFUtil.memorize("ChannelInfoDetail", props);
+	ForwardPage("ChannelManagementDetail.htm");
+}
+
+function add()//新增用户
+{
+	AWFUtil.removeCookie("ChannelInfoDetail")
+	ForwardPage("ChannelManagementDetail.htm");
+}
+
+function searchData() {//查询
+	var submitProps = {
+		formURL: __SELECTDETAIL_URL__,
+		formTarget: "",
+		formData: {},
+		onSubmitSucc: searchData_Result
+	}
+
+	var commonParameters = {};
+	commonParameters['mySite'] = 'manage'
+	commonParameters['myPage'] = myPage;
+	submitProps.formData['parameters.common'] = commonParameters;
+
+	var data = {};
+	data["status.instantNews"] = GetValueByID('opt.activeStatus');
+	data['channelName.instantNews'] = GetValueByID("txt.searchChannelName");
+	data['currentPage.instantNews'] = GetValueByID("txt.currentPage");
+	submitProps.formData['table.newsChannelInfo.instantNews'] = data;
+
+	var form = new AWFForm(submitProps);
+	form.doSubmit();
+
+	function searchData_Result(v) {
+	var data = v.data[0]["table.newsChannelInfo.instantNews"];
+	Contain.clear();
+	if (data.length > 0) {
+		for (var i=0;i<data.length;i++) {
+			Contain.addRow();
+			SetValueByID('int.newsChannelID_'+i,data[i]["channelID.instantNews"]);
+			SetValueByID('txt.channelName_'+i,data[i]["channelName.instantNews"]);
+			SetValueByID('txt.comment_'+i,data[i]["comment.instantNews"]);
+			SetValueByID('int.status_'+i,data[i]["activeStstus.instantNews"]);
+			if(data[i]['activeStstus.instantNews'] == 1)
+			{
+				SetValueByID('txt.status_'+i,"激活");
+			}else if (data[i]['activeStstus.instantNews'] == 2){
+				SetValueByID('txt.status_'+i,"未激活");
+			}
+			SetValueByID('lbl.totalPages',data[i]['totalpage.instantNews']);
+		}
+	}
+}
+}
+
+function InitPage() {
+	loadInitPageData();
+}
+
+function LoadInitPageData_Callback() {
+
+}
+
+function OnPaint() {
+	AWFUtil.setClientWidth(WORKSPACEWIDTH);
+	AWFUtil.setLineHeight(26);
+	CreateAllItems();
+	ShowPageContent();
+}
+</script>
+
+<script language="javascript">
+myPage = "NewsChannelManagement.htm";
+myPageID = "";
+DEBUG("Begin "+myPage);
+OnPaint();
+InitPage();
+DEBUG("End "+myPage);
+</script>
